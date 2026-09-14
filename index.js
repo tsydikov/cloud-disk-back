@@ -20,14 +20,14 @@ app.use("/api/files", fileRouter);
 
 const start = async () => {
   try {
-    mongoose.connect(config.get("dbUrl"), {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(config.get("dbUrl"));
     app.listen(PORT, () => {
-      console.log("server start on port ", PORT);
+      console.log("Server running on port", PORT);
     });
-  } catch (e) {}
+  } catch (e) {
+    console.error("Failed to start server:", e.message);
+    process.exit(1);
+  }
 };
 
 start();
